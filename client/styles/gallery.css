@@ -34,14 +34,15 @@
     font-weight: 600;
 }
 
-.top-nav a.icon {
+.top-nav .icon {
     color: var(--text-color-misc);
+    font-family: var(--font-icon);
     font-size: 24px;
     font-weight: 400;
     min-width: 48px;
     width: 48px;
     border-radius: 100%;
-    text-align: center;
+    justify-content: center;
 }
 
 .top-nav a:hover {
@@ -50,9 +51,6 @@
 
 .top-nav a:active {
     background: hsl(0 0% 0% / 0.15);
-}
-.top-nav a.icon:before {
-    width: 100%;
 }
 
 .top-nav > *:last-child {
