@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <meta charset="UTF-8">
+<title>{{ page.title | default: site.title }}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#ffffff">
 <link href="/client/favicon.ico" rel="shortcut icon"/>
@@ -20,5 +21,6 @@
 	</a>
 </header>
 <article class="content">
-	<h1 class="title"></h1>
+	<h1 class="title">{{ page.title }}</h1>
+	
 </article>

@@ -6,7 +6,7 @@
 	src: url(material-icons.woff) format('woff');
 }
 
-.icon .back:before {
+.icon.back:before {
 	font-family: 'Material Icons';
 	content: "arrow_back";
 }
