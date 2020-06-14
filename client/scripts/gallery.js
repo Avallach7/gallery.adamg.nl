@@ -10,7 +10,9 @@
 		const titleElement = document.querySelector(".content > .title");
 		if (titleElement.textContent == "") {
 			const path = location.pathname.split("/").filter(s => s != "");
-			const title = path[path.length-1].replace(/(^\w|\s\w)/g, m => m.toUpperCase());
+			const title = path[path.length-1]
+					.replace(/[_-]/g, " ")
+					.replace(/(^\w|\s\w)/g, m => m.toUpperCase());
 			document.title = title;
 			titleElement.textContent = title;
 		}
