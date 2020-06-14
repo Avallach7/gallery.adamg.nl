@@ -1,24 +1,25 @@
 ---
 ---
 [
-{% capture dataDir %}{{'/data/'}}{% endcapture %}{%
+{% assign ignored = '/404.html,/,/feed.xml,/sitemap.xml,/robots.txt,/CNAME' %}{%
 for page in site.pages %}{%
-	assign urlPrefix = page.url | slice: 0, 6 %}{%
-	if urlPrefix == dataDir 
+	assign urlPrefix = page.url | slice: 0, 8 %}{%
+	unless ignored contains page.url or 
+			urlPrefix == '/client/' or
+			urlPrefix == '/server/'
 		%}	"{{ page.url }}",
 {%
-	endif %}{%
+	endunless %}{%
 endfor %}{% 
 
 for static_file in site.static_files %}{% 
-	assign urlPrefix = static_file.path | slice: 0, 6 %}{%
-	if urlPrefix == dataDir
-		%}	"{{ static_file.path }}"{% 
-		if forloop.last == false 
-			%},{% 
-		endif 
-		%}
+	assign urlPrefix = static_file.path | slice: 0, 8 %}{%
+		unless ignored contains static_file.path or 
+				urlPrefix == '/client/' or
+				urlPrefix == '/server/'
+		%}	"{{ static_file.path }}",
 {%
-	endif %}{% 
+	endunless %}{% 
 endfor 
-%}]
+%}	"/"
+]
