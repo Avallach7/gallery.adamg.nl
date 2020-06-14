@@ -3,13 +3,12 @@ description:
 layouts_dir: ./server/templates
 includes_dir: ./server/templates
 markdown: kramdown
-# remote_theme: https://alpha.themodders.org/server/templates
 plugins:
   - kramdown
   - jekyll-default-layout
   - jekyll-github-metadata
   - jekyll-optional-front-matter
-  # - jekyll-paginate
   - jekyll-remote-theme
-  # - jekyll-feed
-  # - jekyll-sitemap
+  - jekyll-paginate
+  - jekyll-feed
+  - jekyll-sitemap
