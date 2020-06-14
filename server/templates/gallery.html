@@ -14,13 +14,36 @@
 <script type="module" src="/client/scripts/gallery.js"></script>
 
 <header class="top-nav">
-	<a class="icon" href="..">arrow_back</a>
+	<a class="icon back" href="..">arrow_back</a>
 	<h1 class="site-title">{{ site.title }}</h1>
 	<a class="avatar" href="/">
-		<img src="/data/avatar.jpeg">
+		<img src="/avatar.jpeg">
 	</a>
 </header>
 <article class="content">
 	<h1 class="title">{{ page.title }}</h1>
+
+	<section class="files">
+		{%
+			assign urlLength = page.url | size %}{%
+			for otherPage in site.pages %}{%
+				assign urlPrefix = otherPage.url | slice: 0, urlLength %}{%
+				if urlPrefix == page.url and
+						page.url != otherPage.url
+					%}<a href="{{ otherPage.url }}">{{ otherPage.name }}</a>{%
+				endif %}{%
+			endfor
+		%}
+
+		{%
+			assign urlLength = page.url | size %}{%
+			for staticFile in site.static_files %}{%
+				assign urlPrefix = staticFile.path | slice: 0, urlLength %}{%
+				if urlPrefix == page.url
+					%}<a href="{{ staticFile.path }}">{{ staticFile.basename }}</a>{%
+				endif %}{%
+			endfor
+		%}
+	</section>
 	
 </article>

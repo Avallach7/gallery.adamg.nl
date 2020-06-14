@@ -69,6 +69,7 @@
     font-size: 56px;
     font-weight: 300;
     margin: 0;
+    margin-bottom: 52px;
 }
 
 .avatar {
@@ -87,4 +88,24 @@
     pointer-events: none;
     touch-action: none;
     z-index: -1;
+}
+
+.files a {
+    width: 205px;
+    height: 48px;
+    border: 1px solid hsl(0 0% 0% / 0.15);
+    border-radius: 6px;
+    margin: 4px 6px;
+    display: inline-flex;
+    align-items: center;
+    color: rgba(0,0,0,.72);
+    font-size: 13px;
+}
+
+.files a:before {
+    content: 'insert_photo';
+    font-family: var(--font-icon);
+    font-size: 18px;
+    color: #5f6368;
+    padding: 0 16px;
 }

@@ -4,10 +4,14 @@
 	async init() {
 		this.index = await (await fetch("/server/data-index.json")).json();
 		console.log("index", this.index);
-		if (location.pathname == "/") {
-			document.querySelector(".top-nav .back").style.display = "none";
-		}
 		const titleElement = document.querySelector(".content > .title");
+		if (location.pathname == "/") {
+			document.querySelector(".top-nav .back").style.display = "none"; 
+			// TODO: show sidebar button instead
+			const siteTitleElement = document.querySelector(".top-nav .site-title");
+			titleElement.textContent = siteTitleElement.textContent;
+			siteTitleElement.textContent = "";
+		}
 		if (titleElement.textContent == "") {
 			const path = location.pathname.split("/").filter(s => s != "");
 			const title = path[path.length-1]

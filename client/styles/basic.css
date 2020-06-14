@@ -17,13 +17,16 @@ a, button {
 	cursor: pointer;
 }
 
+:root {
+	overflow-y: auto;
+}
+
 body {
 	font-family: var(--body-font);
 	margin: 0;
 	background: var(--background-color);
 	color: var(--text-color);
 	min-height: 100vh;
-	overflow-y: auto;
 	text-size-adjust: none;
 	cursor: default;
 	min-width: var(--min-viewport-width);
