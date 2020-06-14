@@ -1,0 +1,10 @@
+---
+---
+[
+{% for page in site.pages %}{% if page.url == "/404.html" or 
+	page.url == "/meta/git.json.html" or
+	page.url == "/meta/index.json.html" or
+	page.url == "/" or
+	page.url == "/feed.xml" %}{% else %}	"{{ page.url }}",
+{% endif %}{% endfor %}{% for static_file in site.static_files %}{% if static_file.path == "/CNAME" %}{% else %}	"{{ static_file.path }}"{% if forloop.last == false %},{% endif %}
+{% endif %}{% endfor %}]
