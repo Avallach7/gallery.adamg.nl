@@ -1,5 +1,6 @@
-title: gallery.adamg.nl
+title: My pictures
 description:
+theme: null
 layouts_dir: ./server/templates
 includes_dir: ./server/templates
 markdown: kramdown

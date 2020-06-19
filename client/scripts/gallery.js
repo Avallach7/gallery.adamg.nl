@@ -1,4 +1,4 @@
-({
+window.gallery = {
 	index: null,
 
 	async init() {
@@ -20,5 +20,22 @@
 			document.title = title;
 			titleElement.textContent = title;
 		}
+		const descendants = this.index.filter(p => p.startsWith(location.pathname));
+		const existingDescendants = new Set(document.querySelectorAll(".files a"));
+		const parent = document.querySelector(".files");
+		for (var descendant of descendants) {
+			if (! existingDescendants.has(descendant)) {
+				const a = document.createElement("a");
+				a.href = descendant;
+				const name = descendant
+						.replace(new RegExp("^.*[\\\/]"), '')
+						.replace(new RegExp("\\.[^.]+$"), "");
+				a.textContent = name;
+				parent.appendChild(a);
+			}
+		}
+
 	}
-}).init()
+};
+
+window.gallery.init();

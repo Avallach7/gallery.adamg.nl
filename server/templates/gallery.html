@@ -11,39 +11,56 @@
 <link href="/client/fonts/open-sans/open-sans.css" rel="stylesheet">
 <link href="/client/fonts/ubuntu/ubuntu.css" rel="stylesheet">
 <link href="/client/fonts/material-icons/material-icons.css" rel="stylesheet">
-<script type="module" src="/client/scripts/gallery.js"></script>
+<script src="/client/scripts/turbolinks.js"></script><!-- 
+<script type="module" src="/client/scripts/gallery.js"></script> -->
 
 <header class="top-nav">
 	<a class="icon back" href="..">arrow_back</a>
 	<h1 class="site-title">{{ site.title }}</h1>
-	<a class="avatar" href="/">
-		<img src="/avatar.jpeg">
-	</a>
 </header>
 <article class="content">
 	<h1 class="title">{{ page.title }}</h1>
 
-	<section class="files">
-		{%
-			assign urlLength = page.url | size %}{%
-			for otherPage in site.pages %}{%
-				assign urlPrefix = otherPage.url | slice: 0, urlLength %}{%
-				if urlPrefix == page.url and
-						page.url != otherPage.url
-					%}<a href="{{ otherPage.url }}">{{ otherPage.name }}</a>{%
-				endif %}{%
-			endfor
-		%}
-
-		{%
-			assign urlLength = page.url | size %}{%
-			for staticFile in site.static_files %}{%
-				assign urlPrefix = staticFile.path | slice: 0, urlLength %}{%
-				if urlPrefix == page.url
-					%}<a href="{{ staticFile.path }}">{{ staticFile.basename }}</a>{%
-				endif %}{%
-			endfor
-		%}
-	</section>
+	<section class="files">{%
+		assign ignored = '/404.html,/,/feed.xml,/sitemap.xml,/robots.txt,/CNAME,/assets/css/style.css' %}{%
+		assign urlLength = page.url | size %}{%
+		
+		for otherPage in site.pages %}{%
+			assign urlPrefix1 = otherPage.url | slice: 0, urlLength %}{%
+			assign urlPrefix2 = otherPage.url | slice: 0, 8 %}{%
+			unless urlPrefix1 != page.url or
+					page.url == otherPage.url or
+					ignored contains otherPage.url or 
+					urlPrefix2 == '/client/' or
+					urlPrefix2 == '/server/' %}{%
+				if otherPage.title == null %}{%
+					assign endIndex = otherPage.url | size | minus: 2 %}{%
+					assign otherPageTrimmedPath = otherPage.url | slice: 1, endIndex | replace: "-", " " | replace: "_", " "
+					%}		<a href="{{ otherPage.url }}" data-type="{{ otherPage.layout }}">{{ otherPageTrimmedPath }}</a>
+{%				else
+					%}		<a href="{{ otherPage.url }}" data-type="{{ otherPage.layout }}">{{ otherPage.title }}</a>
+{%				endif %}{%
+			endunless %}{%
+		endfor %}{% 
+		 
+		for static_file in site.static_files %}{%
+			assign urlPrefix1 = static_file.path | slice: 0, urlLength %}{%
+			assign urlPrefix2 = static_file.path | slice: 0, 8 %}{%
+			unless urlPrefix1 != page.url or
+					page.url == static_file.path or
+					ignored contains static_file.path or 
+					urlPrefix2 == '/client/' or
+					urlPrefix2 == '/server/' %}{%
+				assign dotIndex = static_file.name | size | minus: 4 %}{%
+				assign fourthCharFromRight = static_file.name | slice: dotIndex, 1 %}{%
+				if fourthCharFromRight == '.' %}{%
+				assign filenameWithoutExtension = static_file.name | slice: 0, dotIndex | replace: "-", " " | replace: "_", " "
+					%}		<a href="{{ static_file.path }}">{{ filenameWithoutExtension }}</a>
+{%				else
+					%}		<a href="{{ static_file.path }}">{{ static_file.name | replace: "-", " " | replace: "_", " " }}</a>
+{%				endif %}{%
+			endunless %}{%
+		endfor
+	%}</section>
 	
 </article>
