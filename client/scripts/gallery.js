@@ -4,7 +4,16 @@ const gallery = {
 	async init() {
 		console.log("init");
 		this.updateTitleBar();
+		this.updateFileNames();
 		this.displayThumbnails();
+	},
+
+	updateFileNames() {
+		for (var imageLink of document.querySelectorAll(".files a")) {
+			imageLink.textContent = imageLink
+					.textContent
+					.replace(/(^\w|\s\w)/g, m => m.toUpperCase());
+		}
 	},
 
 	updateTitleBar() {
@@ -25,13 +34,13 @@ const gallery = {
 	async displayThumbnails() {
 		const promises = [];
 		for (var imageLink of document.querySelectorAll(".files a")) {
+			// TODO: load one by one and watch for navigation started event to abort
 			const finalImageLink = imageLink;
 			promises.push((async() => { 
 				const imageUrl = finalImageLink.href;
 				if (! imageUrl.endsWith(".jpg")) {
 					return;
 				}
-				console.log("image: " + imageUrl);
 				var thumbUrl;
 				if (this.thumbnailCache[imageUrl]) {
 					thumbUrl = this.thumbnailCache[imageUrl];
@@ -83,6 +92,5 @@ const gallery = {
 	}
 };
 
-// gallery.init();
 document.addEventListener("turbolinks:load", gallery.init.bind(gallery));
 window.gallery = gallery;
