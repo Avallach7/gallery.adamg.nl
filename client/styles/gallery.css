@@ -151,3 +151,14 @@
     position: absolute;
     bottom: 0;
 }
+
+@media (max-width: 500px) {
+    .content {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .files a {
+        width: 200px;
+        margin: 0;
+    }
+}
