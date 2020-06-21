@@ -124,3 +124,29 @@
     box-shadow: 0 0 20px white, 0 0 20px white, 0 0 20px white;
     text-shadow: 0 0 20px white, 0 0 20px white;
 }
+
+
+.files a.with-thumbnail {
+    height: 164px;
+}
+
+.files a.with-thumbnail .thumb {
+    display: block;
+    height: 115px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid hsl(0 0% 0% / 0.15);
+}
+
+.files a.with-thumbnail .label {
+    position: absolute;
+    bottom: 0;
+    left: 46px;
+}
+
+.files a.with-thumbnail:before {
+    position: absolute;
+    bottom: 0;
+}

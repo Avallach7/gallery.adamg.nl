@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+set -eu
+
+function saveThumbnails() {
+	for picture in $( find . -name '*.jpg' )
+	do
+		if $( isIgnored ${picture} )
+		then
+			continue
+		fi
+		echo "starting ${picture}"
+		rm "${picture}_original" || true
+		convert "${picture}" -thumbnail 192x108 "${picture}.thumbnail.jpg"
+		exiftool "-thumbnailimage<=${picture}.thumbnail.jpg" "${picture}"
+		rm "${picture}.thumbnail.jpg"
+		rm "${picture}_original"
+		echo "finished ${picture}"
+	done
+	echo "all finished"
+}
+
+function isIgnored() {
+	local p_picture=${1}
+
+	local ignoredDirs=(".dev" "client" "server" "_site")
+	for ignoredDir in "${ignoredDirs[@]}"
+	do
+		if [[ ${p_picture} == "./${ignoredDir}/"* ]]
+		then
+			true; return
+		fi
+	done
+	false; return
+}
+
+saveThumbnails
