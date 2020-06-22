@@ -80,7 +80,7 @@ body {
     content: '';
     display: block;
     height: 100px;
-    background: linear-gradient(var(--background-color), transparent);
+    background: linear-gradient(var(--background-color), var(--background-color-transparent));
     position: fixed;
     top: 0;
     left: 0;

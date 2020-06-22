@@ -1,5 +1,6 @@
 :root {
 	--background-color: white;
+	--background-color-transparent: rgba(255,255,255,0); /*required for mac gradients*/
 	--background-color-elevated: hsl(228 6% 17% / 0.7);
 	--background-color-button: rgb(138 180 248 / 0.1);
 	--text-color: #3c4043;
