@@ -20,8 +20,7 @@ const gallery = {
 		const titleElement = document.querySelector(".content > .title");
 		if (location.pathname == "/") {
 			document.querySelector(".top-nav").style.display = "none"; 
-		}
-		if (titleElement.textContent == "") {
+		} else if (titleElement.textContent == "") {
 			const path = location.pathname.split("/").filter(s => s != "");
 			const title = path[path.length-1]
 					.replace(/[_-]/g, " ")
@@ -59,6 +58,9 @@ const gallery = {
 				finalImageLink.appendChild(label);
 				finalImageLink.classList.add("with-thumbnail");
 			})());
+			if (promises.length > 4) {
+				await Promise.all(promises);
+			}
 		}
 		await Promise.all(promises);
 	},
@@ -67,7 +69,13 @@ const gallery = {
 		const bytesLength = Math.pow(2, 14);
 		const thumbHeaders = { headers: { range: "bytes=0-" + (bytesLength-1)} };
 		var thumbBytes = await (await fetch(imageUrl + "?bytes=" + bytesLength, thumbHeaders)).blob();
-		const bytesArray = new Uint8Array(await thumbBytes.arrayBuffer());
+		var arrayBuffer;
+		if (thumbBytes.arrayBuffer) {
+			arrayBuffer = await thumbBytes.arrayBuffer();
+		} else {
+			arrayBuffer = await new Response(thumbBytes).arrayBuffer();
+		}
+		const bytesArray = new Uint8Array(arrayBuffer);
 		var start = null;
 		var end = null;
 		for (var i = 2; i < bytesArray.length; i++) {
