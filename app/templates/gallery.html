@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" is="app-gallery">
+<meta charset="UTF-8">
+<title>{{ page.title | default: site.title }}</title>
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff"> -->
+<!-- <link href="/app/favicon.ico" rel="icon"/> -->
+<link href="/app/styles/config.css" rel="stylesheet">
+<link href="/app/styles/basic.css" rel="stylesheet">
+<link href="/app/styles/gallery.css" rel="stylesheet">
+<!-- <link href="/app/fonts/open-sans/open-sans.css" rel="stylesheet">
+<link href="/app/fonts/ubuntu/ubuntu.css" rel="stylesheet">
+<link href="/app/fonts/material-icons/material-icons.css" rel="stylesheet">-->
+<script defer src="/app/scripts/turbolinks.js"></script>
+<script defer type="module" src="/app/scripts/gallery.js"></script> 
+
+{% if page.url != '/' %}
+<header class="top-nav">
+	<a class="icon back" href="..">&lt;</a>
+	<h1 class="site-title">{{ site.title }}</h1>
+</header>
+{% endif %}
+<article class="content">
+	<h1 class="title">{{ page.title | default: site.title }}</h1>
+
+	<section class="files">{%
+		assign ignored = '/404.html,/,/feed.xml,/sitemap.xml,/robots.txt,/CNAME,/assets/css/style.css' %}{%
+		assign urlLength = page.url | size %}{%
+		
+		for otherPage in site.pages %}{%
+			assign urlPrefix1 = otherPage.url | slice: 0, urlLength %}{%
+			assign urlPrefix2 = otherPage.url | slice: 0, 5 %}{%
+			unless urlPrefix1 != page.url or
+					page.url == otherPage.url or
+					ignored contains otherPage.url or 
+					urlPrefix2 == '/app/' %}{%
+				if otherPage.title == null %}{%
+					assign endIndex = otherPage.url | size | minus: 2 %}{%
+					assign otherPageTrimmedPath = otherPage.url | slice: 1, endIndex | replace: "-", " " | replace: "_", " "
+					%}		<a href="{{ otherPage.url }}" data-type="{{ otherPage.layout }}">{{ otherPageTrimmedPath }}</a>
+{%				else
+					%}		<a href="{{ otherPage.url }}" data-type="{{ otherPage.layout }}">{{ otherPage.title }}</a>
+{%				endif %}{%
+			endunless %}{%
+		endfor %}{% 
+		 
+		for static_file in site.static_files %}{%
+			assign urlPrefix1 = static_file.path | slice: 0, urlLength %}{%
+			assign urlPrefix2 = static_file.path | slice: 0, 5 %}{%
+			assign pathLength = static_file.path | size %}{%
+			assign urlSuffixStart = pathLength | minus: 10 %}{%
+			assign urlSuffix = static_file.path | slice: urlSuffixStart, pathLength %}{%
+			unless urlPrefix1 != page.url or
+					page.url == static_file.path or
+					ignored contains static_file.path or 
+					urlSuffix == '.thumb.jpg' or
+					urlPrefix2 == '/app/' %}
+				<a href="{{ static_file.path }}" class="with-thumbnail">
+					<span class="label">{{ static_file.basename | replace: "-", " " | replace: "_", " " }}</span>
+					<img class="thumb" src="{{ static_file.path }}.thumb.jpg">
+				</a>
+{%			endunless %}{%
+		endfor
+	%}</section>
+	
+</article>

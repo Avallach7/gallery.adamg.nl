@@ -1,7 +1,0 @@
----
----
-{
-	"url": "{{ site.url }}",
-	"repository": "{{ repository_url }}",
-	"version": "{{ build_revision }}"
-}

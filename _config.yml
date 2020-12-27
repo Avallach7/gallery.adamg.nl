@@ -1,8 +1,8 @@
-title: My pictures
+title: Adam G
 description:
 theme: null
-layouts_dir: ./server/templates
-includes_dir: ./server/templates
+layouts_dir: ./app/templates
+includes_dir: ./app/templates
 markdown: kramdown
 plugins:
   - kramdown

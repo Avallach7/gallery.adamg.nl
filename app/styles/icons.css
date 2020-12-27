@@ -1,0 +1,24 @@
+.top-nav .icon {
+	font-family: var(--font-icon);
+	font-display: block;
+}
+
+.icon.back:before {
+    content: 'arrow_back';
+    font-family: var(--font-icon);
+	font-display: block;
+}
+
+.files a:before {
+    content: 'insert_photo';
+    font-family: var(--font-icon);
+    font-size: 18px;
+    color: #5f6368;
+    padding-right: 0 16px;
+    vertical-align: middle;
+	font-display: block;
+}
+
+.files a[data-type="gallery"]:before {
+    content: 'folder';
+}
